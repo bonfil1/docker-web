@@ -1,0 +1,24 @@
+mysql:
+  container_name: docker-mysql
+  build: builds/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: root
+   MYSQL_USER: mysql
+   MYSQL_PASSWORD: mysql
+   MYSQL_DATABASE: drupal8
+  volumes:
+   - /Users/jose/mysql/:/var/lib/mysql
+
+apache:
+  container_name: docker-apache
+  build: builds/apache
+  ports:
+   - 80:80
+  environment:
+   APACHE_DB_HOST: mysql:3306
+   APACHE_DB_USER: mysql
+   APACHE_DB_PASSWORD: mysql
+  links:
+   - mysql
+  volumes:
+   - /Users/jose/www:/var/www/html
